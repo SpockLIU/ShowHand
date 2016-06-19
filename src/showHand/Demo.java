@@ -5,7 +5,7 @@ public class Demo {
 		ShowHandGame game = new ShowHandGame();
 		String[] str = {"Tim", "Parker", "Kobe"};
 		game.init(str);
-		for(int i = 0; i < 3; i++){
+		for(int i = 0; i < 2; i++){
 			game.newRound();
 		}
 		game.showResult();

@@ -50,7 +50,7 @@ public class ShowHandGame {
 				clip += bet;
 				for(int j = 1; j < players.size(); j++){
 					int follower = (j + lastMax) % players.size();
-					
+					System.out.println(players.get(follower).getName() + "所看见的牌");
 					showCards(players.get(follower));
 					if(players.get(follower).isOn() && players.get(follower).isFollow(bet)){
 						clip += bet;
