@@ -43,6 +43,14 @@ public class ShowHandCards implements Comparable{
 		return str;
 	}
 	
+	public String toOther(){
+		String str = "底牌" + "\t";
+		for(int i = 1; i < shCards.size(); i++){
+			str += shCards.get(i).toString() + "\t";
+		}
+		return str;
+	}
+	
 	public boolean isFull(){
 		return shCards.size() == 5;
 	}
