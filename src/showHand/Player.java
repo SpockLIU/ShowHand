@@ -27,6 +27,7 @@ public class Player {
 	
 	
 	public void initPlayer(){
+		inBet = 0;
 		onBoard = true;
 		playerCard.initSHCards();
 	}
