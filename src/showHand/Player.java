@@ -6,7 +6,7 @@ public class Player {
 	private String name;
 	private int account;
 	private int winTimes;
-	int pBet = 0;
+	int inBet = 0;
 	private boolean onBoard = true;
 	public ShowHandCards playerCard = new ShowHandCards();
 	
@@ -20,11 +20,14 @@ public class Player {
 		return name;
 	}
 	
+	
 	public int getBet(){
-		return pBet;
+		return inBet;
 	}
 	
+	
 	public void initPlayer(){
+		onBoard = true;
 		playerCard.initSHCards();
 	}
 	
@@ -36,15 +39,17 @@ public class Player {
 	public int bet(){
 		System.out.print("Please input your bet: ");
 		Scanner input = new Scanner(System.in);
-		pBet = input.nextInt();
-		account -= pBet;
-		return pBet;
+		int bet = input.nextInt();
+		inBet += bet;
+		account -= bet;
+		return bet;
 	}
 	
 	public boolean isFollow(int bet){
-		System.out.print(name + ": 这一轮的赌注为" + bet + "请确定是否要跟 Y/N : ");
+		System.out.print(name + ": 这一轮的赌注为" + bet + ". 请确定是否要跟 Y/N ? : ");
 		Scanner input = new Scanner(System.in);
 		if(input.next().equalsIgnoreCase("Y")){
+			inBet += bet;
 			account -= bet;
 			return true;
 		}else{
@@ -79,21 +84,7 @@ public class Player {
 	}
 	
 	public boolean goon(){
-		System.out.println(name);
+		//System.out.println(name);
 		return true;
-		/*
-		System.out.print("Follow: Y/N?");
-		Scanner input = new Scanner(System.in);
-		if(input.next().equalsIgnoreCase("Y")){
-			//this.bet();
-			return true;
-		}else {
-			return false;
-		}
-		*/
-		
 	}
-	
-	
-
 }

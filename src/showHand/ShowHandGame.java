@@ -26,6 +26,8 @@ public class ShowHandGame {
 	}
 	
 	public void newRound(){
+		System.out.println("Round" + (round + 1));
+		round ++;
 		bet = 0;
 		clip =0;
 		poker.initPoker();
@@ -37,19 +39,19 @@ public class ShowHandGame {
 				p.playerCard.getCards(poker.deliverCard());
 			}
 		}
-		for(int i = 2; i < 5; i++){
+		for(int i = 1; i < 5; i++){
 			int quiteNum = 0;
 			lastMax = Deliver(players, lastMax);
-			System.out.println(clip);
-			for(Player p : players){
-				System.out.println(p.getName() + "看到的牌：");
-				showCards(p.getName());
-			}
+			
 			if(players.get(lastMax).goon()){
+				System.out.println(players.get(lastMax).getName() + "所看见的牌");
+				showCards(players.get(lastMax));
 				bet = players.get(lastMax).bet();
 				clip += bet;
 				for(int j = 1; j < players.size(); j++){
 					int follower = (j + lastMax) % players.size();
+					
+					showCards(players.get(follower));
 					if(players.get(follower).isOn() && players.get(follower).isFollow(bet)){
 						clip += bet;
 					}else {
@@ -57,20 +59,21 @@ public class ShowHandGame {
 						quiteNum ++;
 					}
 				}
-			
 			}
 			
 			if(quiteNum == players.size() - 1){
-				round++;
 				break;
 			}
-			
-			
+			System.out.println();
 		}
 		Player winner = this.finndWinner(players);
 		winner.win(clip);
 		
-		System.out.println("本轮的胜利者为" + winner.getName() + "， 他赢得的赌注为" + clip);
+		System.out.println("本轮的胜利者为" + winner.getName() + "， 他赢得的赌注为" + (clip - winner.getBet()));
+		for(Player p : players){
+			System.out.println(p.getName() + "余额： " + p.getAccount());
+		}
+		System.out.println();
 	}
 	
 	public Player finndWinner(ArrayList<Player> players){
@@ -85,6 +88,7 @@ public class ShowHandGame {
 		}else {
 			Player winner = playerList.get(0);
 			for(Player p : playerList){
+				//System.out.println(p.playerCard.shCards.size());
 				if(winner.playerCard.compareTo(p.playerCard) < 0){
 					winner = p;
 				}
@@ -93,10 +97,10 @@ public class ShowHandGame {
 		}
 	}
 			
-	public void showCards(String str){
+	public void showCards(Player player){
 		for(Player p : players){
 			System.out.println(p.getName());
-			p.showCards(str);
+			p.showCards(player.getName());
 		}
 	}
 	
