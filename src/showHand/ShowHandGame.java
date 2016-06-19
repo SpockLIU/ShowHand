@@ -9,7 +9,7 @@ public class ShowHandGame {
 	int bet = 0;
 	int clip = 0;
 	int lastMax = 0;
-	List<Player> players = new ArrayList<>();
+	ArrayList<Player> players = new ArrayList<>();
 	
 	public void init(String[] playerList){
 		poker.initPoker();
@@ -40,9 +40,10 @@ public class ShowHandGame {
 		for(int i = 2; i < 5; i++){
 			int quiteNum = 0;
 			lastMax = Deliver(players, lastMax);
+			System.out.println(clip);
 			for(Player p : players){
-				System.out.println(p.getName() + "的牌为： ");
-				p.showCards(p.getName());
+				System.out.println(p.getName() + "看到的牌：");
+				showCards(p.getName());
 			}
 			if(players.get(lastMax).goon()){
 				bet = players.get(lastMax).bet();
@@ -58,20 +59,46 @@ public class ShowHandGame {
 				}
 			
 			}
+			
 			if(quiteNum == players.size() - 1){
-				for(Player p : players){
-					if(p.isOn()){
-						p.win(clip);
-					}
-				}
 				round++;
-				return;
+				break;
 			}
 			
+			
+		}
+		Player winner = this.finndWinner(players);
+		winner.win(clip);
+		
+		System.out.println("本轮的胜利者为" + winner.getName() + "， 他赢得的赌注为" + clip);
+	}
+	
+	public Player finndWinner(ArrayList<Player> players){
+		ArrayList<Player> playerList = new ArrayList<>();
+		for(Player p : players){
+			if(p.isOn()){
+				playerList.add(p);
+			}
+		}
+		if(playerList.size() == 1){
+			return playerList.get(0);
+		}else {
+			Player winner = playerList.get(0);
+			for(Player p : playerList){
+				if(winner.playerCard.compareTo(p.playerCard) < 0){
+					winner = p;
+				}
+			}
+			return winner;
 		}
 	}
 			
-		
+	public void showCards(String str){
+		for(Player p : players){
+			System.out.println(p.getName());
+			p.showCards(str);
+		}
+	}
 	
 	
 	public void showResult(){
